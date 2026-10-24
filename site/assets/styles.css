@@ -1,71 +1,403 @@
-/* Plain starting styles. The Developer role replaces them with the design brief. */
+/* Geist 1.800, SIL Open Font License 1.1: fonts/geist/OFL.txt */
+@font-face {
+  font-family: "Geist";
+  font-style: normal;
+  font-weight: 100 900;
+  font-display: swap;
+  src: url("fonts/geist/geist-latin-wght-normal.woff2") format("woff2");
+}
+
+/* JetBrains Mono 2.211, SIL Open Font License 1.1: fonts/jetbrains-mono/OFL.txt */
+@font-face {
+  font-family: "JetBrains Mono";
+  font-style: normal;
+  font-weight: 100 800;
+  font-display: swap;
+  src: url("fonts/jetbrains-mono/jetbrains-mono-latin-wght-normal.woff2") format("woff2");
+}
+
 :root {
   color-scheme: light dark;
-  --text: light-dark(#1b1b1f, #ececf1);
-  --muted: light-dark(#5a5a66, #a8a8b3);
-  --background: light-dark(#ffffff, #121216);
-  --accent: light-dark(#1a56db, #8fb2ff);
-  font-family: system-ui, sans-serif;
+  --background: light-dark(#fafaf9, #111211);
+  --surface: light-dark(#f1f3f1, #181c19);
+  --text: light-dark(#1b1b1a, #ececea);
+  --muted: light-dark(#58605b, #9faaa2);
+  --accent: light-dark(#18392b, #42b58f);
+  --on-accent: light-dark(#ffffff, #111211);
+
+  --font-heading: "Geist", system-ui, sans-serif;
+  --font-body: "Geist", system-ui, sans-serif;
+  --font-details: "JetBrains Mono", ui-monospace, Menlo, Consolas, monospace;
+
+  font-family: var(--font-body);
+  font-size: 1rem;
   line-height: 1.6;
   color: var(--text);
-  background: var(--background);
+  background-color: var(--background);
+  font-size-adjust: from-font;
 }
 
 body {
   margin: 0;
+  background-color: var(--background);
+  color: var(--text);
 }
 
 main,
 footer {
   max-width: 44rem;
   margin-inline: auto;
-  padding: 2rem 1.25rem;
+  padding-inline: 1.25rem;
+  box-sizing: border-box;
 }
 
-a {
-  color: var(--accent);
+main {
+  padding-block: 3.5rem 2rem;
 }
 
-.headline,
-.period {
-  color: var(--muted);
+/* Space between sections */
+.section + .section {
+  margin-block-start: 3rem;
+  position: relative;
 }
 
-.projects,
-.links,
-.cv-list {
-  list-style: none;
-  padding: 0;
+/* Personal detail: subtle piano-key divider pattern with clean geometric rhythm separating key areas */
+.section + .section::before {
+  content: "";
+  display: block;
+  width: 100%;
+  height: 6px;
+  margin-block-end: 2.5rem;
+  background-image: repeating-linear-gradient(
+    to right,
+    color-mix(in srgb, var(--muted) 35%, transparent) 0px,
+    color-mix(in srgb, var(--muted) 35%, transparent) 8px,
+    transparent 8px,
+    transparent 16px
+  );
 }
 
-.project,
-.cv-list li {
-  margin-block-end: 1.5rem;
+/* Headings */
+h1, h2, h3, h4 {
+  font-family: var(--font-heading);
+  color: var(--text);
+  margin-block-start: 0;
+  text-wrap: balance;
 }
 
-.project-links,
-.links,
-.skills {
+h1 {
+  font-size: 1.75rem;
+  font-weight: 600;
+  line-height: 1.25;
+  margin-block-end: 0.5rem;
+}
+
+h2 {
+  font-size: 1.125rem;
+  font-weight: 600;
+  line-height: 1.35;
+  margin-block-end: 1rem;
   display: flex;
-  flex-wrap: wrap;
-  gap: 1rem;
+  align-items: baseline;
+  gap: 0.5rem;
 }
 
-.skills {
-  padding: 0;
-  list-style: none;
+/* Sector index decoration on section headings */
+h2::before {
+  font-family: var(--font-details);
+  font-size: 0.8125rem;
+  font-weight: 400;
+  color: var(--muted);
+  content: "§ " / "";
+}
+
+h3 {
+  font-size: 1rem;
+  font-weight: 600;
+  margin-block-end: 0.5rem;
+}
+
+h4 {
+  font-size: 0.9375rem;
+  font-weight: 600;
+  margin-block: 0 0.25rem;
+}
+
+p {
+  margin-block: 0 1rem;
+  text-wrap: pretty;
+}
+
+p:last-child {
+  margin-block-end: 0;
+}
+
+/* Links and buttons */
+a {
+  color: var(--text);
+  text-decoration-line: underline;
+  text-decoration-color: var(--muted);
+  text-underline-offset: 0.25em;
+  transition: color 150ms ease-out, text-decoration-color 150ms ease-out;
+}
+
+a:hover {
+  color: var(--accent);
+  text-decoration-color: var(--accent);
+}
+
+:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+/* Bio & First Screen */
+#bio .headline {
+  color: var(--muted);
+  font-size: 1rem;
+  margin-block-end: 1.25rem;
+}
+
+#bio .pitch {
+  font-size: 1.0625rem;
+  font-weight: 500;
+  line-height: 1.5;
+  margin-block-end: 1.25rem;
 }
 
 .photo {
   border-radius: 50%;
+  display: block;
+  margin-block-end: 1.5rem;
+  width: 100px;
+  height: auto;
+  aspect-ratio: 1;
+  object-fit: cover;
+  border: 1px solid color-mix(in srgb, var(--muted) 25%, transparent);
 }
 
-.role,
-.type {
+/* Sector boxes / Cards: Highlights, availability, cards, certifications */
+.highlights {
+  list-style: none;
+  padding: 1.25rem;
+  margin: 0 0 1.25rem 0;
+  background-color: var(--surface);
+  border: 1px solid color-mix(in srgb, var(--muted) 25%, transparent);
+  border-radius: 0.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.highlights li {
+  position: relative;
+  padding-inline-start: 1.25rem;
+  font-size: 0.9375rem;
+}
+
+.highlights li::before {
+  content: "→" / "";
+  position: absolute;
+  inset-inline-start: 0;
+  color: var(--accent);
+  font-family: var(--font-details);
+}
+
+.availability {
+  padding: 1rem 1.25rem;
+  background-color: var(--surface);
+  border: 1px solid color-mix(in srgb, var(--muted) 25%, transparent);
+  border-radius: 0.5rem;
+  margin-block-end: 1.25rem;
+  font-size: 0.9375rem;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+}
+
+.availability a {
+  display: inline-block;
+  background-color: var(--accent);
+  color: var(--on-accent);
+  text-decoration: none;
+  padding: 0.375rem 0.875rem;
+  border-radius: 0.5rem;
+  font-weight: 500;
+  font-size: 0.875rem;
+  transition: opacity 150ms ease-out;
+}
+
+.availability a:hover {
+  opacity: 0.9;
+  color: var(--on-accent);
+  text-decoration: none;
+}
+
+/* Facts (location, languages) */
+.facts {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 1.25rem 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+}
+
+.facts li {
+  background-color: var(--surface);
+  border: 1px solid color-mix(in srgb, var(--muted) 25%, transparent);
+  border-radius: 0.25rem;
+  padding: 0.35rem 0.65rem;
+  font-size: 0.875rem;
+}
+
+.fact-label {
+  font-family: var(--font-details);
+  font-size: 0.75rem;
+  color: var(--muted);
+  text-transform: uppercase;
+  margin-inline-end: 0.25rem;
+}
+
+/* Dates and periods in details font */
+.period,
+.credential-id,
+time {
+  font-family: var(--font-details);
+  font-size: 0.875rem;
   color: var(--muted);
 }
 
-.project-image {
-  max-width: 100%;
-  height: auto;
+/* Lists and Sector Items */
+.projects,
+.cv-list,
+.certifications,
+.links {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+/* Cards & Sector Boxes */
+.project,
+.cv-list li,
+.certification {
+  background-color: var(--surface);
+  border: 1px solid color-mix(in srgb, var(--muted) 25%, transparent);
+  border-radius: 0.5rem;
+  padding: 1.25rem;
+  margin: 0;
+  box-sizing: border-box;
+}
+
+.cv-list li h4 {
+  margin-block-end: 0.25rem;
+}
+
+.cv-list li .period {
+  margin-block-end: 0.5rem;
+}
+
+/* Skills: compact pill badges */
+.skills {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.skills li {
+  background-color: var(--surface);
+  border: 1px solid color-mix(in srgb, var(--muted) 35%, transparent);
+  border-radius: 0.25rem;
+  padding: 0.25rem 0.625rem;
+  font-size: 0.875rem;
+  font-family: var(--font-details);
+  color: var(--text);
+}
+
+/* Links section */
+.links {
+  flex-direction: row;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+}
+
+.links li a {
+  display: inline-block;
+  background-color: var(--surface);
+  border: 1px solid color-mix(in srgb, var(--muted) 25%, transparent);
+  border-radius: 0.5rem;
+  padding: 0.625rem 1rem;
+  font-size: 0.9375rem;
+  text-decoration: none;
+}
+
+.links li a:hover {
+  border-color: var(--accent);
+  color: var(--accent);
+}
+
+/* Footer & Colophon */
+footer {
+  border-block-start: 1px solid color-mix(in srgb, var(--muted) 25%, transparent);
+  padding-block: 2rem 3rem;
+  margin-block-start: 4rem;
+  font-size: 0.875rem;
+  color: var(--muted);
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+#colophon {
+  font-family: var(--font-details);
+  font-size: 0.75rem;
+  line-height: 1.5;
+  color: var(--muted);
+}
+
+#colophon a {
+  color: var(--muted);
+}
+
+#colophon a:hover {
+  color: var(--accent);
+}
+
+/* Signature Move: Staggered entrance on load */
+@keyframes sector-settle {
+  from {
+    translate: 0 0.75rem;
+  }
+  to {
+    translate: 0 0;
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .section,
+  .highlights li,
+  .cv-list li,
+  .certification {
+    animation: sector-settle 250ms ease-out both;
+    animation-delay: calc(var(--sibling-index, 1) * 60ms);
+    animation-delay: calc(sibling-index() * 60ms);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .section,
+  .highlights li,
+  .cv-list li,
+  .certification {
+    animation: none;
+  }
 }
